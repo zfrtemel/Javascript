@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<!--title>getElementByName Örnek</title-->
+	<style type="text/css">
+		.dormant {
+			color :#00f;
+			width:100px;
+			height:100px;
+			line-height:100px;
+			border-radius:50%;
+			text-align:center;
+			font-size:1.5em;
+			font-weight:500;
+			float:left;
+			margin:5px;
+		}
+		.success {
+			color :#0f0 !important;
+		}
+		.wrong {
+			color :#f00 !important;
+		}
+		.fontLabel{
+			font-size: 45px;
+		}
+		.hint {
+    background: url('') transparent;
+ color :#00f;
+ background-color: black;
+ width: 50%;
+    border: none;
+}​
+	</style>
+
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   
+<script type="text/javascript" src="src/jquery.cookie.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.slim.min.js" i></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" ></script>
+   
+
+
+<script type="text/javascript">
+function getLocal(name) {
+	var veri=localStorage.getItem(name);
+	return (veri);
+}
+	function controlLocal() {
+			
+		if (localStorage.getItem("isim") === null) {
+		var usName = prompt("Lütfen Adınızı Türkçe Karakter Olmadann giriniz"); 
+					
+						localStorage.setItem("isim",usName);
+						alert(localStorage.getItem("isim"));
+		}
+		else{
+
+		alert("hoşgeldin "+getLocal("isim"));
+		}
+		
+			
+}
+
+
+
+
+
+
+/*	
+var cookieUser=getCookie("username");
+console.log(cookieUser);
+if (cookieUser=="") {
+	var usName = prompt("Lütfen Adınızı Türkçe Karakter Olmadann giriniz"); 
+        if (usName  != null) { 
+           // document.cookie=("username"+usName,{expires: 7});
+            var now = new Date();
+			var time = now.getTime();
+			time += 3600 * 1000;
+			debugger;
+			now.setTime(time);
+			document.cookie = 
+			'username=' + usName + 
+			'; expires=' + now.toUTCString() + 
+			'; path=/';
+alert(now);
+            alert(usName);
+            alert(cookieUser);//cookie alma işlemi şimdi doğru
+		}
+	       //bir sayıyı arttırıp bunu puan olarak kullanıcaz
+	       //sayı 5 olursa ipucu butonu çıkacak ve css ile renkli bir animasyon gösterecek 
+	       //tıklandığında sayıyı 5 düşürecek
+	} */
+
+</script>
+
+
+
+</head>
+<body onload="controlLocal();">
+<div class="containsiner">
+	
+	<div class="row d-flex justify-content-center">
+		<div class="col-md-2">
+	        <div id="labelDiv" >
+                <label id="label1" class="fontLabel">0</label>
+                <label id="label2" class="fontLabel">0</label>
+                <label id="label3" class="fontLabel">0</label>
+                <label id="label4" class="fontLabel">0</label>
+                <label id="label5" class="fontLabel">0</label>
+	        </div>
+		</div>
+	</div>
+	<div class="row">
+	<div class="col-sm-8">
+	    <div id="panel">
+
+	
+		</div>
+		
+	</div>
+	<div class="col-sm-4">
+		<button type="submit" class="hint" onclick="logOut();">Çıkış Yap</button>
+		<button type="submit" >İpucu</button>
+	</div>
+	</div>
+</div>
+<script type="text/javascript" language="javascript">
+function bul() {
+	// body...
+}
+
+function scoreIncrease(puan) {
+	var skor=parseInt(localStorage.getItem(puan));
+	skor++;
+	localStorage.setItem("skor",skor);
+alert(skor);
+}
+
+
+function logOut() {
+	localStorage.removeItem("isim");
+	alert("Çıkış Yaptınız Lütfen Giriş Yapınız");
+	controlLocal();
+
+}
+	
+		var randomNums = [];
+		var numbersFound = 0;
+		var wrongSelections = 0;
+		var score=0;
+
+function kapat() {
+	var off = document.getElementsByTagName("button");
+	for (var i = 0; i < off.length; i++) {
+	    off[i].disabled = true;// tüm butonları disable yapar böylelikle kullanıcı yanlışları ve doğruları görebilir
+	}
+}
+
+
+
+		function checkStatus(found) {
+			console.log(found);
+			if (found) 
+				numbersFound++;// doğru seçimi arttırıyor
+			else 
+				wrongSelections++;// yanlış seçim artıyor
+
+			if (wrongSelections >= 5) {
+				var sonuc= confirm("kaybettiniz");
+				if (sonuc==true) {
+					location.reload();
+
+				}
+				else{
+					kapat();
+				}
+
+				return;
+			}
+
+			if (randomNums.length == numbersFound){ // eğer 5 yanlış seçim yapmışsam buraya hiç girmeyecek
+			
+					
+				  var islem = confirm("tebrikler "+numbersFound+" doğru bildiniz yeniden oynamak ister misiniz?");
+				  if (islem == true) {
+
+					scoreIncrease("skor");
+					location.reload();
+				  } 
+				  else{
+						kapat();
+						
+		scoreIncrease("skor");
+			      }  
+
+				}
+		}
+
+
+
+			var switchTitle = false;
+			var panelDiv =document.getElementById("panel");
+			var labelDiv=document.getElementById("labelDiv");
+			var min = 1;
+			var max = 35;
+			for (var i = 0; i < 5; i++) {// random oluşturma kısmı
+				randomNums[i] = Math.floor(Math.random() * max );
+				
+	//	labelDiv.innerHTML += "<span id='sayilar'>" + randomNums[i] + ",</span>";
+				console.log(randomNums[i]);
+			}
+
+			for (var i = min; i < max; i ++) { // buton oluşturma kısmı
+				var newBtn = document.createElement("button");
+				newBtn.setAttribute("id", i);
+				newBtn.innerHTML = i;
+				newBtn.classList.add("dormant");
+
+					newBtn.onclick = function (e) {
+						e.preventDefault(); // eğer butonun önceden bi handleri varsa onu önlüyor
+						
+						console.log(this.id + " clicked!"); // console.log konsola yazı yazar
+						var found = false;
+						found=( randomNums.indexOf(parseInt(this.id))!=-1);
+						if (found) {
+
+							this.classList.add('success');
+								document.getElementById(this.id).disabled = true;// yine eğer cevap dogru ise 5 adet dgru sayıp tebrikler demesin diye disable hale geldi
+								checkStatus(true);
+								found = true;
+								for( var i = 0; i < randomNums.length; i++){ 
+							       if ( randomNums[i] === this.id) { 
+							         randomNums.splice(i, 1); 
+							         console.log(randomNums[i])
+							       }
+							    }
+								document.title = this.id + " doğru!";
+							var lbl=document.getElementById("label"+numbersFound);
+								
+								lbl.innerHTML=this.id+",";
+						}
+						else{
+							if (this.classList.contains("success"))
+								this.classList.remove("success");
+							checkStatus(false);
+							this.classList.add('wrong');
+							document.getElementById(this.id).disabled = true;// tıklanılan butonu hatalı olduğu için tekrar tıklanmasın diye disable hale getirdik
+							
+						}
+					}
+
+
+            		panelDiv.appendChild(newBtn);
+				}
+</script>
+
+</body>
+</html>

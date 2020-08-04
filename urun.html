@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ürünler</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="css/app.min.css">
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Custom style CSS -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>
+      var cart = [];
+      $(function () {
+          if (localStorage.cart)
+          {
+              cart = JSON.parse(localStorage.cart);// verileri carta atıyor
+              showCart();
+          }
+      });
+
+      function addToCart() {
+          var price = $("#sUrun").val();
+          var name = $("#sUrun option:selected").text();// value ile fiyat text ile ürün adı alınıyor
+          var qty = $("#qty").val();
+
+          for (var i in cart) {
+              if(cart[i].Product == name)
+              {
+                
+                  cart[i].Qty = qty;
+                  showCart();
+                  saveCart();
+                  return;// adet güncelleme
+              }
+          }
+          var item = { Product: name,  Price: price, Qty: qty }; 
+          cart.push(item);
+          saveCart();
+          showCart();
+      }
+
+      function deleteItem(index){
+          cart.splice(index,1);
+          showCart();
+          saveCart();
+      }
+
+      function saveCart() {
+          if ( window.localStorage)
+          {
+              localStorage.cart = JSON.stringify(cart);
+          }
+      }
+
+      function showCart() {
+          if (cart.length == 0) {
+              $("#cart").css("visibility", "hidden");
+              return;
+          }
+
+          $("#cart").css("visibility", "visible");
+          $("#cartBody").empty();
+          for (var i in cart) {
+              var item = cart[i];
+              var row = "<tr><td>" + item.Product + "</td><td>" +
+                           item.Price + "</td><td>" + item.Qty + "</td><td>"
+                           + item.Qty * item.Price + "</td><td>"
+                           + "<button onclick='deleteItem(" + i + ")' class='btn btn-danger'>Delete</button></td></tr>";
+              $("#cartBody").append(row);
+          }
+      }
+      
+  </script>
+<script > 
+var urun = [];
+  $(function () {
+      if (localStorage.urun)
+      {
+        urun = JSON.parse(localStorage.urun);
+        showUrun();
+      }
+  });
+
+  function addToUrun() {
+      var price = $("#priceUrun").val();
+      var name = $("#nameUrun").val();
+
+      for (var i in urun) {
+          if(urun[i].Product == name)
+          {
+           
+            showUrun();
+              saveUrun();
+              return;
+          }
+      }
+      var item = { Product: name,  Price: price}; //proporty tanımlıyoruz
+      urun.push(item);
+      saveUrun();
+      showUrun();
+  }
+
+  function saveUrun() {
+      if ( window.localStorage)
+      {
+          localStorage.urun = JSON.stringify(urun);
+      }
+  }
+
+  function showUrun() {
+      $("#sUrun").css("visibility", "visible");
+      $("#urunDiv").empty();
+      for (var i in urun) {
+          var item = urun[i];
+          var row = '<option value="'+item.Price+'">'+item.Product+'</option>'
+          $("#urunDiv").append(row);
+      }
+  }
+</script>
+</head>
+<body style="background-color:grey;">
+  <div class="container p-3 my-3 border" style="background-color:white;">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card-header">
+          <h4>Ürün Oluştur:   </h4>
+        </div>
+
+        <br/>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="background-color: lightgreen;" id="inputGroup-sizing-sm">Ürün Adı</span>
+            </div>
+            <input id="nameUrun" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" style="background-color: lightgreen;" id="inputGroup-sizing-sm">Fiyat</span>
+            </div>
+            <input id="priceUrun" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+          </div>
+          <button class="btn btn-primary" id="btnProduct" onclick="addToUrun();"  >Ürün Ekle</button>
+     
+      </div>
+   
+      <div class="col">
+        <div class="card-header">
+          <h4>Listeye Ürün Ekle</h4>
+          
+        </div>
+       <br/>
+       <h6> Ürün Seçimi : 
+            
+        <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="sUrun">
+ 
+            <optgroup id="urunDiv" label="Ürün Adı">
+          <option value="5000">iPhone6</option>
+            <option value="6000">iPhone6 Plus</option>
+            <option value="4500">iPad Air 2</option>
+            </optgroup>
+
+          </select>
+      </h6>
+        
+        <div class="input-group input-group-sm mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" style="background-color: darkgray;" id="inputGroup-sizing-sm">Adet</span>
+          </div>
+          <input id="qty" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+        </div>
+      
+       <br/>
+        <button class="btn btn-success" id="btnAdd" onclick="addToCart()" >Sepete Ekle</button>
+     
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container p-3 my-3 border" style="background-color:white;">
+    
+    
+  <div class="card-header">
+    <h4>Ürünler Tablosu</h4>
+    
+  </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table id="cart" class="table table-striped">
+          <thead>
+          <tr>
+        
+          <th>Ürün</th>
+          <th>Fiyat</th>
+          <th>Adet</th>
+          <th>Toplam</th>
+    
+          </tr>
+        </thead>
+          
+       <tbody id="cartBody">
+
+       </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

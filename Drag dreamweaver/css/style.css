@@ -1,0 +1,53 @@
+/*drop alanı*/
+  .menu{
+    width: auto;
+    height: 150px;
+    margin-right: 25px;
+    margin-left: 20px;
+    background-color:#00b894;
+}
+.drop1{
+
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 250px;
+    height: 240px;
+    width: 250px;
+    background-color:#00b894;
+}
+.drop2{
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 25px;
+    height: 240px;
+    width: 250px;
+    background-color:#00b894;
+}
+.drop3{
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 25px;
+    height: 240px;
+    width: 250px;
+    background-color:#00b894;
+}
+.drop4{
+    display: inline-block;
+    margin-top: 25px;
+    margin-left: 25px;
+    height: 240px;
+    width: 250px;
+    background-color:#00b894;
+}
+/* eğer direk etiket adı girilirse tüm etiketlere etki eder
+
+img{
+   
+}
+*/
+.sideImg{
+    height: 55px;
+    width: 65px;
+    background-color:grey;
+}
+
